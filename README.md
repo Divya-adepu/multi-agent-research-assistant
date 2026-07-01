@@ -9,16 +9,17 @@ A multi-agent system that answers research questions by orchestrating three spec
 3. **Response Generator Agent** — takes the summary and produces a clear, well-formatted final answer to the user's original question.
 
 These agents are connected as nodes in a **LangGraph** state graph, with a shared state object passed between them at each step.
-User Query
-│
-▼
-[Retrieval Agent] → raw web search results
-│
-▼
-[Summarizer Agent] → condensed key points
-│
-▼
-[Response Generator Agent] → final formatted answer
+
+    User Query
+        |
+        v
+    [Retrieval Agent] --> raw web search results
+        |
+        v
+    [Summarizer Agent] --> condensed key points
+        |
+        v
+    [Response Generator Agent] --> final formatted answer
 
 ## Why three separate agents?
 
@@ -40,14 +41,15 @@ Splitting the pipeline into distinct agents (rather than one large prompt) makes
 2. Create a virtual environment: `python -m venv venv`
 3. Activate it: `venv\Scripts\activate` (Windows) or `source venv/bin/activate` (Mac/Linux)
 4. Install dependencies:
-pip install langgraph langchain-groq ddgs python-dotenv groq
+   `pip install langgraph langchain-groq ddgs python-dotenv groq`
 5. Create a `.env` file with your free Groq API key from console.groq.com:
-GROQ_API_KEY=your_key_here
+   `GROQ_API_KEY=your_key_here`
 6. Run it:
-python main.py
+   `python main.py`
 
 ## Example
-Enter your research question: what are the latest AI agent frameworks in 2026
+
+Input: `what are the latest AI agent frameworks in 2026`
 
 The system retrieves current web results, summarizes them, and returns a clean, structured answer.
 
