@@ -1,6 +1,6 @@
 # Multi-Agent Research Assistant
 
-A multi-agent system that answers research questions by orchestrating three specialized agents using **LangGraph**: retrieval, summarization, and response generation.
+A multi-agent system that answers research questions by orchestrating three specialized agents using **LangGraph**: retrieval, summarization, and response generation. Includes a custom Streamlit web interface.
 
 ## How it works
 
@@ -28,11 +28,16 @@ Splitting the pipeline into distinct agents (rather than one large prompt) makes
 - **More modular** — any agent can be swapped out (e.g. a different search tool, or a different LLM) without touching the others
 - **More reliable** — smaller, focused prompts tend to produce more consistent outputs than one large multi-task prompt
 
+## Web interface
+
+The app includes a Streamlit UI with a clean, custom-designed dashboard: input a question, watch the agents run, and get a formatted answer with an expandable section showing each agent's intermediate output (the raw search results and the summary).
+
 ## Tech stack
 
 - **LangGraph** — agent orchestration and state management
 - **Groq API** (Llama 3.1 8B) — LLM inference
 - **DuckDuckGo Search (`ddgs`)** — free web search, no API key required
+- **Streamlit** — web interface
 - **Python-dotenv** — environment variable management
 
 ## Setup
@@ -41,20 +46,27 @@ Splitting the pipeline into distinct agents (rather than one large prompt) makes
 2. Create a virtual environment: `python -m venv venv`
 3. Activate it: `venv\Scripts\activate` (Windows) or `source venv/bin/activate` (Mac/Linux)
 4. Install dependencies:
-   `pip install langgraph langchain-groq ddgs python-dotenv groq`
+pip install -r requirements.txt
 5. Create a `.env` file with your free Groq API key from console.groq.com:
-   `GROQ_API_KEY=your_key_here`
-6. Run it:
-   `python main.py`
+GROQ_API_KEY=your_key_here
+6. Run the terminal version:
+python main.py
+   Or run the web interface:
+streamlit run app.py
+
+## Error handling
+
+- Missing Groq API key raises a clear error with setup instructions instead of a raw traceback.
+- If a web search returns no results, the pipeline stops gracefully and tells the user, instead of passing empty data downstream to the LLM.
 
 ## Example
 
 Input: `what are the latest AI agent frameworks in 2026`
 
-The system retrieves current web results, summarizes them, and returns a clean, structured answer.
+The system retrieves current web results, summarizes them, and returns a clean, structured answer with headings and bullet points.
 
 ## Future improvements
 
-- Streamlit web UI for a more interactive experience
-- Error handling for failed searches or API calls
 - Support for multi-turn conversations with memory
+- Basic input validation for nonsensical queries
+- Deploy the Streamlit app to a public URL (e.g. Streamlit Community Cloud)
